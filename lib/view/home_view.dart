@@ -19,12 +19,6 @@ class _HomeViewState extends State<HomeView> {
     Provider.of<QuizController>(context, listen: false).getQuestion();
   }
 
-
-    
-
-    
-   
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +32,6 @@ class _HomeViewState extends State<HomeView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
               Text(
                 quiz.question,
                 style: TextStyle(color: Colors.white, fontSize: 20.sp),
@@ -46,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
               SizedBox(
                 height: 10,
               ),
-             // for(MapEntry numbers in numbers.entries)
+              // for(MapEntry numbers in numbers.entries)
               SizedBox(
                 height: 400.h,
                 child: ListView.separated(
@@ -57,26 +50,60 @@ class _HomeViewState extends State<HomeView> {
                     );
                   },
                   itemBuilder: (BuildContext context, int index) {
-                  //  value.selectindex(index);
+                    //  value.selectindex(index);
                     return InkWell(
-                      onTap: (){
-                         value.selectindex(index);
+                      onTap: () {
+                        if (value.selectedIndex==-1) {
+                           value.selectindex(index);
+                        }
+                       
                       },
                       child: Container(
                         height: 50.h,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: Colors.white)),
+                          color:value.selectedIndex!=-1? index==value.selectedIndex&& quiz.options[value.selectedIndex].isCorrect ==
+                                  true
+                              ? Colors.green
+                              :index==value.selectedIndex&& quiz.options[value.selectedIndex].isCorrect ==
+                                      false
+                                  ? Colors.red
+                                  : Colors.transparent: Colors.transparent,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: Colors.white),
+                        ),
                         child: Text(
-                         ' ${quiz.options[index].text.toString()}',
-                          style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                          ' ${quiz.options[index].text.toString()}',
+                          style:
+                              TextStyle(fontSize: 18.sp, color: Colors.white),
                         ),
                       ),
                     );
                   },
                 ),
               ),
+
+              ElevatedButton(
+                  onPressed: () {
+                    value.nextIndex();
+                  },
+                  child: Text("Next")),
+              // Container(
+              //               height: 50.h,
+              //               alignment: Alignment.center,
+              //               decoration: BoxDecoration(
+              //                   borderRadius: BorderRadius.circular(18),
+              //                   border: Border.all(color: Colors.white)),
+              //               child:
+
+              //               Text(
+              //                 quiz.options[0].text.toString()
+
+              //                ' ${quiz.options[index].text.toString()}',
+              //                 style: TextStyle(fontSize: 18.sp, color: Colors.white),
+              //               ),
+
+              //             ),     // ),
             ],
           ),
         );

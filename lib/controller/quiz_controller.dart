@@ -9,10 +9,20 @@ class QuizController extends ChangeNotifier {
   List<QuizModel> qusData = [];
 
 
+
+
+
   int selectedIndex=-1;
 selectindex(int index){
+
   selectedIndex=index;
 print(selectedIndex);
+notifyListeners();
+}
+
+nextIndex(){
+selectedIndex=-1;
+notifyListeners();
 }
 Future<void> getQuestion() async {
   const url = 'https://nice-lime-hippo-wear.cyclic.app/api/v1/quiz';
@@ -28,11 +38,11 @@ Future<void> getQuestion() async {
       notifyListeners(); // Notify only when data is successfully loaded
     } else {
       print("Request failed with status: ${response.statusCode}");
-      // Handle the error here, e.g., throw an exception or return an error result
+    
     }
   } catch (error) {
     print("Error: $error");
-    // Handle the error here, e.g., throw an exception or return an error result
+   
   }
 }
 
